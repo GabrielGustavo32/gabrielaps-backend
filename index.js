@@ -56,7 +56,7 @@ const ProdutoSchema = new mongoose.Schema({
 const Produto = mongoose.model('Produto', ProdutoSchema);
 
 // ----------------------------------------------------
-// MODELO 3: Fornecedor (CRUD 3) - <<< NOVO >>>
+// MODELO 3: Fornecedor (CRUD 3) 
 // ----------------------------------------------------
 const FornecedorSchema = new mongoose.Schema({
     nome: { type: String, required: true },
@@ -110,15 +110,13 @@ app.delete('/usuarios/:id', async (req, res) => { try { await Usuario.findByIdAn
 // -------------------
 app.post('/produtos', async (req, res) => { try { const novoProduto = new Produto(req.body); await novoProduto.save(); res.status(201).json(novoProduto); } catch (error) { res.status(400).json({ message: 'Erro ao criar produto', error: error.message }); }});
 app.get('/produtos', async (req, res) => { try { const produtos = await Produto.find(); res.json(produtos); } catch (error) { res.status(500).json({ message: 'Erro ao listar produtos', error: error.message }); }});
-app.get('/produtos/:id', async (req, res) => { try { const produto = await Produto.findById(req.params.id); res.json(produto); } catch (error) { res.status(404).json({ message: 'Produto não encontrado' }); }});
+app.get('/produtos/:id', async (req, res) => { try { const produto = await Produto.findById(req.params.id); res.json(produto); } catch (error) { res.status(404).json({ message: 'Produto não encontrado' }); } } );
 app.put('/produtos/:id', async (req, res) => { try { const produto = await Produto.findByIdAndUpdate(req.params.id, req.body, { new: true }); res.json(produto); } catch (error) { res.status(400).json({ message: 'Erro ao editar produto', error: error.message }); }});
 app.delete('/produtos/:id', async (req, res) => { try { await Produto.findByIdAndDelete(req.params.id); res.json({ message: 'Produto excluído com sucesso' }); } catch (error) { res.status(404).json({ message: 'Produto não encontrado' }); }});
 
 // -------------------
-// --- CRUD 3: Fornecedores --- <<< NOVO >>>
+// --- CRUD 3: Fornecedores ---
 // -------------------
-
-// INCLUIR (Create)
 app.post('/fornecedores', async (req, res) => {
     try {
         const novoFornecedor = new Fornecedor(req.body);
@@ -128,8 +126,6 @@ app.post('/fornecedores', async (req, res) => {
         res.status(400).json({ message: 'Erro ao criar fornecedor', error: error.message });
     }
 });
-
-// LISTAR (Read)
 app.get('/fornecedores', async (req, res) => {
     try {
         const fornecedores = await Fornecedor.find();
@@ -138,8 +134,6 @@ app.get('/fornecedores', async (req, res) => {
         res.status(500).json({ message: 'Erro ao listar fornecedores', error: error.message });
     }
 });
-
-// BUSCAR 1 (Read by ID)
 app.get('/fornecedores/:id', async (req, res) => {
     try {
         const fornecedor = await Fornecedor.findById(req.params.id);
@@ -148,8 +142,6 @@ app.get('/fornecedores/:id', async (req, res) => {
         res.status(404).json({ message: 'Fornecedor não encontrado' });
     }
 });
-
-// EDITAR (Update)
 app.put('/fornecedores/:id', async (req, res) => {
     try {
         const fornecedor = await Fornecedor.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -158,8 +150,6 @@ app.put('/fornecedores/:id', async (req, res) => {
         res.status(400).json({ message: 'Erro ao editar fornecedor', error: error.message });
     }
 });
-
-// EXCLUIR (Delete)
 app.delete('/fornecedores/:id', async (req, res) => {
     try {
         await Fornecedor.findByIdAndDelete(req.params.id);
