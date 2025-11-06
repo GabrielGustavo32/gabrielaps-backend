@@ -149,7 +149,7 @@ app.put('/fornecedores/:id', async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: 'Erro ao editar fornecedor', error: error.message });
     }
-});
+    });
 app.delete('/fornecedores/:id', async (req, res) => {
     try {
         await Fornecedor.findByIdAndDelete(req.params.id);
